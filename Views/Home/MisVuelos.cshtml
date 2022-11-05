@@ -1,0 +1,94 @@
+﻿@{
+    ViewData["Title"] = "Mis Vuelos";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Mis vuelos</h1>
+
+    <div class="card text-center">
+        <div class="card-body">
+            <h5 class="card-title">Viaje</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        </div>
+    </div>
+
+    <div class="card text-center mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Reserva de lugares</h5>
+
+            <span class="d-inline-block" data-toggle="tooltip" title="Disponible">
+                <button class="btn btn-success" data-toggle="modal" data-target="#DisponibleModal">A1</button>
+            </span>
+
+            <span class="d-inline-block" data-toggle="tooltip" title="En Reserva">
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#ReservaModal">A2</button>
+            </span>
+
+            <span class="d-inline-block" data-toggle="tooltip" title="Confirmado">
+                <a href="#" class="btn btn-danger disabled">A3</a>
+            </span>
+
+        </div>
+
+        <!-- Modal Disponible -->
+        <div class="modal fade" id="DisponibleModal" tabindex="-1" aria-labelledby="DisponibleModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Reserva de lugar</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Tiene xx minutos para confirmar.
+                        <br />
+                        Despues de este tiempo, quedará como disponible.
+                        <br />
+                        Para confirmar ir a mis vuelos.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Reservar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Reserva -->
+        <div class="modal fade" id="ReservaModal" tabindex="-1" aria-labelledby="ReservaModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Lugar reservado</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Lugar se encuentra reservado
+                        <br />
+                        Desea quedarse en lista de espera?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary">Si</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts{
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            })
+        </script>
+    }
+
+</div>
