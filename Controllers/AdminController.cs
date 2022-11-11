@@ -1,0 +1,239 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using ProyectoDB2.Auxiliares;
+using ProyectoDB2.Models;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Odbc;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ProyectoDB2.Controllers
+{
+    public class AdminController : Controller
+    {
+        public ActionResult GuardarTripulacionAsignada(int vueloId, int personaId)
+        {
+            
+
+            
+
+            return View(respuesta);
+        }
+
+        public ActionResult AgregarTripulacionAVuelo(int idVuelo)
+        {
+            TripulacionAuxiliar auxiliar = new TripulacionAuxiliar();
+            AgregarTripulacionVuelo respuesta = new AgregarTripulacionVuelo();
+            respuesta.ListadoTripulacionAsignada = auxiliar.ObtenerTripulacionAsiganda(idVuelo);
+            respuesta.ListadoTripulacion = auxiliar.ObtenerTripulacion();
+            respuesta.idVuelo = idVuelo;
+
+            return View(respuesta);
+        }
+
+        public ActionResult GuardarVuelo(string avion, string ciudadOrigen, string ciudadDestino, string fechaSalida, string horaSalida, string fechaLlegada, string horaLlegada, string checkEscala1, string es1, string es2, string es3)
+        {
+            int contador = 0;
+            int tieneEscala = 0;
+            if (checkEscala1 != null)
+            {
+                tieneEscala = 1;
+            }
+
+            try
+            {
+                int ees1 = 0;
+                int ees2 = 0;
+                int ees3 = 0;
+
+                if (es1 != null)
+                {
+                    contador++;
+                    ees1 = int.Parse(es1);
+                }
+                else
+                {
+                    if (es2 != null)
+                    {
+                        contador++;
+                        ees2 = int.Parse(es2);
+                    }
+                    else
+                    {
+                        if (es3 != null)
+                        {
+                            contador++;
+                            ees3 = int.Parse(es3);
+                        }
+                    }
+                }
+
+                var fechaO = DateTime.Parse(fechaSalida + " " + horaSalida);
+                var fechaLl = DateTime.Parse(fechaLlegada + " " + horaLlegada);
+
+                using (SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=AerolineaABC;Integrated Security=True"))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspIngresoVuelo", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@idaeropuertoO", SqlDbType.Int).Value = int.Parse(ciudadOrigen);
+                        cmd.Parameters.Add("@idaeropuertoD", SqlDbType.Int).Value = int.Parse(ciudadDestino);
+                        cmd.Parameters.Add("@idavion", SqlDbType.Int).Value = int.Parse(avion);
+                        cmd.Parameters.Add("@fechaS", SqlDbType.DateTime).Value = fechaO;
+                        cmd.Parameters.Add("@fechaE", SqlDbType.DateTime).Value = fechaLl;
+                        cmd.Parameters.Add("@idescala", SqlDbType.Int).Value = contador;
+                        cmd.Parameters.Add("@TieneEscala", SqlDbType.Int).Value = tieneEscala;
+                        cmd.Parameters.Add("@Escala1", SqlDbType.Int).Value = ees1;
+                        cmd.Parameters.Add("@Escala2", SqlDbType.Int).Value = ees2;
+                        cmd.Parameters.Add("@Escala3", SqlDbType.Int).Value = ees3;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                return RedirectToAction("Vuelos");
+            }
+            catch (Exception e)
+            {
+                string mensaje = e.Message;
+                
+                return RedirectToAction("Vuelos");
+                throw;
+            }
+            
+        }
+
+        public ActionResult AgregarVuelo()
+        {
+            try
+            {
+                AereopuertoAuxiliar aereopuertoAuxiliar = new AereopuertoAuxiliar();
+                AvionesAuxiliar avionesAuxiliar = new AvionesAuxiliar();
+
+                NuevoVuelo nuevoVuelo = new NuevoVuelo
+                {
+                    ListadoAereopuertos = aereopuertoAuxiliar.ObtenerAereopuertos(),
+                    ListadoAviones = avionesAuxiliar.ObtenerAviones()
+                };
+
+                return View(nuevoVuelo);
+            }
+            catch (Exception e)
+            {
+
+                return View();
+            }
+        }
+
+        public ActionResult Vuelos()
+        {
+            try
+            {
+                VueloAuxiliar vueloAuxiliar = new VueloAuxiliar();
+                List<Vuelo> vuelos = vueloAuxiliar.ObtenerVuelos();
+                return View(vuelos);
+            }
+            catch (Exception)
+            {
+
+                return View();
+                throw;
+            }
+            
+        }
+        
+        public ActionResult GuardarAereopuerto(string nombre, string pais)
+        {
+            return RedirectToAction("Aereopuertos");
+        }
+        
+        public ActionResult Aereopuertos()
+        {
+            try
+            {
+                AereopuertoAuxiliar aereopuertoAuxiliar = new AereopuertoAuxiliar();
+                List<Aereopuerto> aereopuertos = aereopuertoAuxiliar.ObtenerAereopuertos();
+                return View(aereopuertos);
+            }
+            catch (Exception e)
+            {
+                return View();
+                throw;
+            }
+            
+        }
+
+        public ActionResult GuardarTripulacion(string nombre, string puesto)
+        {
+            return RedirectToAction("Tripulacion");
+        }
+
+        public ActionResult Tripulacion()
+        {
+            ConexionAuxiliar conexion = new ConexionAuxiliar();
+            string query = "select p.*, tp.Clasifiacion as tipo from Persona p " +
+                "left join Tipo_Persona tp on p.ID_Tipo_Persona = tp.ID_Tipo_Persona " +
+                "where p.ID_Tipo_Persona != 3 " +
+                "order by tipo desc";
+            SqlDataReader reader = conexion.Conexion(query);
+
+            List<Persona> respuesta = new List<Persona>();
+
+            while (reader.Read())
+            {
+                Persona persona = new Persona();
+                persona.Id = int.Parse(reader["id_persona"].ToString());
+                persona.Dpi = reader["dpi"].ToString();
+                persona.FechaNacimiento = reader["fechaNacimiento"].ToString();
+                persona.Email = reader["email"].ToString();
+                persona.Telefono = reader["telefono"].ToString();
+                persona.Nombre = reader["nombre"].ToString();
+                persona.Apellido = reader["apellido"].ToString();
+                persona.Tipo = reader["tipo"].ToString();
+                respuesta.Add(persona);
+            }
+            conexion.ConexionClose();
+
+            return View(respuesta);
+        }
+
+        public ActionResult GuardarAvion(string tipoAvion, string capacidad)
+        {
+            return RedirectToAction("Aviones");
+        }
+
+        public ActionResult Aviones()
+        {
+            AvionesAuxiliar avionesAuxilar = new AvionesAuxiliar();
+
+            List<Avion> respuesta = avionesAuxilar.ObtenerAviones();
+
+            return View(respuesta);
+        }
+        
+        public ActionResult Index()
+        {
+            List<Vuelo> respuesta = new List<Vuelo>();
+            try
+            {
+                VueloAuxiliar vueloAuxiliar = new VueloAuxiliar();
+                respuesta = vueloAuxiliar.ObtenerVuelos();
+                return View("Views/Admin/Index.cshtml", respuesta);
+
+            }
+            catch (Exception)
+            {
+                return View("Views/Admin/Index.cshtml");
+                throw;
+            }
+
+        }
+    }
+}

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model VueloYAsientos
+
+@{
     ViewData["Title"] = "Reserva";
 }
 
@@ -8,7 +10,17 @@
     <div class="card text-center">
         <div class="card-body">
             <h5 class="card-title">Viaje</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <p class="card-text">@Model.Vuelo.Origen - @Model.Vuelo.Destino</p>
+            <p class="card-text">Avion:  @Model.Vuelo.Avion</p>
+            <p class="card-text">Fecha de Salida: @Model.Vuelo.FechaSalida</p>
+            <p class="card-text">Fecha de Entrada: @Model.Vuelo.FechaEntrada</p>
+            <p class="card-text">
+                Status: 
+                @if (Model.Vuelo.IdStatus == "1")
+                {
+                  <span class="badge badge-success"> @Model.Vuelo.Status </span>
+                }
+            </p>
         </div>
     </div>
 
@@ -16,18 +28,47 @@
         <div class="card-body">
             <h5 class="card-title">Reserva de lugares</h5>
 
-            <span class="d-inline-block" data-toggle="tooltip" title="Disponible">
-                <button class="btn btn-success" data-toggle="modal" data-target="#DisponibleModal">A1</button>
-            </span>
+            @foreach (var item in Model.listadoAsientos)
+            {
+                @switch (item.IdStatus)
+                {
+                    case "1": //disponible
+                        <span class="d-inline-block" data-toggle="tooltip" title="@item.NombreStatus">
+                            <button class="btn btn-success" data-toggle="modal" data-target="#DisponibleModal">@item.NumeroAsiento</button>
+                        </span>
+                        break;
 
-            <span class="d-inline-block" data-toggle="tooltip" title="En Reserva">
-                <button class="btn btn-secondary" data-toggle="modal" data-target="#ReservaModal">A2</button>
-            </span>
+                    case "2": //reservado
+                        <span class="d-inline-block" data-toggle="tooltip" title="@item.NombreStatus">
+                            <button class="btn btn-secondary" data-toggle="modal" data-target="#ReservaModal">@item.NumeroAsiento</button>
+                        </span>
+                        break;
 
-            <span class="d-inline-block" data-toggle="tooltip" title="Confirmado">
-                <a href="#" class="btn btn-danger disabled">A3</a>
-            </span>
+                    case "3": //confirmado
+                        <span class="d-inline-block" data-toggle="tooltip" title="@item.NombreStatus">
+                            <a href="#" class="btn btn-danger disabled">@item.NumeroAsiento</a>
+                        </span>
+                        break;
 
+                    case "4": //no disponible para la reserva
+                        <span class="d-inline-block" data-toggle="tooltip" title="@item.NombreStatus">
+                            <a href="#" class="btn btn-dark disabled">@item.NumeroAsiento</a>
+                        </span>
+                        break;
+
+                    case "5": //vuelo cancelado
+                        <span class="d-inline-block" data-toggle="tooltip" title="@item.NombreStatus">
+                            <a href="#" class="btn btn-dark disabled">@item.NumeroAsiento</a>
+                        </span>
+                        break;
+
+                    default:
+                        <span class="d-inline-block" data-toggle="tooltip" title="@item.NombreStatus">
+                            <a href="#" class="btn btn-dark disabled">@item.NumeroAsiento</a>
+                        </span>
+                        break;
+                }
+            }
         </div>
 
         <!-- Modal Disponible -->
@@ -45,7 +86,7 @@
                         <br />
                         Despues de este tiempo, quedará como disponible.
                         <br />
-                        Para confirmar ir a mis vuelos.
+                        Para confirmar, ir a mis vuelos.
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -1,0 +1,247 @@
+﻿@model NuevoVuelo
+
+@{ Layout = "_LayoutAdmin"; }
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Vuelos</h1>
+
+    <form method="post" action="@Url.Action("GuardarVuelo", "Admin")">
+        <div class="card">
+            <div class="card-body">
+
+                <h5 class="card-title">Agregar vuelo</h5>
+
+                <div class="card-body d-flex flex-column">
+
+
+
+                    @*Ciudad de origen y destino*@
+                    <div class="d-flex mt-3">
+                        @*ciudad origen*@
+                        <div class="input-group flex-nowrap col-6">
+                            <span class="input-group-text" id="addon-wrapping">
+                                <i class="bi bi-building"></i>
+                            </span>
+                            <select class="form-select w-100" id="ciudadOrigen" name="ciudadOrigen" required>
+                                <option value="">Ciudad Origen</option>
+                                @foreach (var item in Model.ListadoAereopuertos)
+                                {
+                                    <option value="@item.Id">@item.Pais - @item.Ciudad - @item.Nombre</option>
+                                }
+                            </select>
+                        </div>
+
+                        @*ciudad destino*@
+                        <div class="input-group flex-nowrap col-6">
+                            <span class="input-group-text" id="addon-wrapping">
+                                <i class="bi bi-building"></i>
+                            </span>
+                            <select class="form-select w-100" id="ciudadDestino" name="ciudadDestino" required>
+                                <option value="">Ciudad Destino</option>
+                                @foreach (var item in Model.ListadoAereopuertos)
+                                {
+                                    <option value="@item.Id">@item.Pais - @item.Ciudad - @item.Nombre</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    @*Fecha y hora*@
+                    <div class="d-flex mt-3">
+                        @*fecha*@
+                            <div class="input-group flex-nowrap col-6">
+                                <span class="input-group-text" id="addon-wrapping">
+                                    <i class="bi bi-calendar-event mr-2"></i> Fecha de Salida
+                                </span>
+                                <input type="date" class="form-control" placeholder="FechaSalida" aria-label="FechaSalida" name="fechaSalida" aria-describedby="addon-wrapping" required>
+                            </div>
+
+                            <div class="input-group flex-nowrap col-6">
+                                <span class="input-group-text" id="addon-wrapping">
+                                    <i class="bi bi-alarm mr-2"></i> Hora Salida
+                                </span>
+                                <input type="time" class="form-control" placeholder="HoraSalida" aria-label="HoraSalida" name="horaSalida" aria-describedby="addon-wrapping" required>
+                            </div>
+                    </div>
+                        
+                    <div class="d-flex mt-3">                           
+                        <div class="input-group flex-nowrap col-6">
+                            <span class="input-group-text" id="addon-wrapping">
+                                <i class="bi bi-calendar-event mr-2"></i> Fecha de Llegada
+                            </span>
+                            <input type="date" class="form-control" placeholder="fechaEntrada" aria-label="fechaEntrada" name="fechaLlegada" aria-describedby="addon-wrapping" required>
+                        </div>
+
+                        <div class="input-group flex-nowrap col-6">
+                            <span class="input-group-text" id="addon-wrapping">
+                                <i class="bi bi-alarm mr-2"></i> Hora Llegada
+                            </span>
+                            <input type="time" class="form-control" placeholder="horaEntrada" aria-label="horaEntrada" name="horaLlegada" aria-describedby="addon-wrapping" required>
+                        </div>
+                    </div>
+
+                    @*tripulacion*@
+                    <!--<div class="d-flex mt-3">
+        <div class="input-group flex-nowrap col-12">
+            <span class="input-group-text" id="addon-wrapping">
+                <i class="bi bi-person-badge"></i>
+            </span>
+            <select class="form-select w-100" id="pais" name="tripulacion" multiple required>
+                <option value="guatemala">Piloto - Javier Jolon</option>
+                <option value="argentian">Aereomosa - Sofia Martinez</option>
+                <option value="argentian">Aereomosa - Laura Martinez</option>
+                <option value="argentian">Aereomosa - Monica Martinez</option>
+                <option value="brasil">Copiloto - Juan Paiz</option>
+                <option value="brasil">Copiloto - Pedro Paiz</option>
+            </select>
+        </div>
+    </div>-->
+                    @* Avion y  escala*@
+                    <div class="d-flex mt-3">
+                        @*avion*@
+
+                        <div class="input-group flex-nowrap col-6">
+                            <span class="input-group-text" id="addon-wrapping">
+                                <i class="bi bi-airplane"></i>
+                            </span>
+                            <select class="form-select w-100" id="avion" name="avion" required>
+                                <option value="">Avion</option>
+                                @foreach (var item in Model.ListadoAviones)
+                                {
+                                    <option value="@item.IdAvion">@item.Modelo - @item.Tipo - @item.Placa - Capacidad: @item.Capacidad</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form-check col-6">
+                            <input class="form-check-input" type="checkbox" value="1" id="checkEscala1" onchange="escala1()" name="checkEscala1">
+                            <label class="form-check-label" for="checkEscala1">
+                                Agregar Escala
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 flex-column" style="display:none;" id="divEscala1">
+
+                        <div class="d-flex">
+                            <div class="input-group flex-nowrap col-11">
+                                <span class="input-group-text" id="addon-wrapping">
+                                    <i class="bi bi-building mr-1"></i> Escala 1:
+                                </span>
+                                <select class="form-select w-100" id="ciudadDestino" name="es1">
+                                    <option value="">Seleccione</option>
+                                    @foreach (var item in Model.ListadoAereopuertos)
+                                    {
+                                        <option value="@item.Id">@item.Pais - @item.Ciudad - @item.Nombre</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="input-group flex-nowrap col-1">
+                                <span class="btn btn-success" onclick="escala2()">
+                                    <i class="bi bi-plus-circle"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="mt-3" style="display: none;" id="divEscala2">
+                            <div class="input-group flex-nowrap col-11">
+                                <span class="input-group-text" id="addon-wrapping">
+                                    <i class="bi bi-building mr-1"></i> Escala 2:
+                                </span>
+                                <select class="form-select w-100" id="ciudadDestino" name="es2">
+                                    <option value="">Seleccione</option>
+                                    @foreach (var item in Model.ListadoAereopuertos)
+                                    {
+                                        <option value="@item.Id">@item.Pais - @item.Ciudad - @item.Nombre</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="input-group flex-nowrap col-1">
+                                <span class="btn btn-success mr-1" onclick="escala3()">
+                                    <i class="bi bi-plus-circle"></i>
+                                </span>
+
+                                <span class="btn btn-danger" onclick="ocultarEscala2()">
+                                    <i class="bi bi-dash-circle"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="mt-3" style="display: none;" id="divEscala3">
+                            <div class="input-group flex-nowrap col-11">
+                                <span class="input-group-text" id="addon-wrapping">
+                                    <i class="bi bi-building mr-1"></i> Escala 3:
+                                </span>
+                                <select class="form-select w-100" id="es3" name="es3">
+                                    <option value="">Seleccione</option>
+                                    @foreach (var item in Model.ListadoAereopuertos)
+                                    {
+                                        <option value="@item.Id">@item.Pais - @item.Ciudad - @item.Nombre</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="input-group flex-nowrap col-1">
+                                <span class="btn btn-danger" onclick="ocultarEscala3()">
+                                    <i class="bi bi-dash-circle"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*boton guardar*@
+                    <div class="d-flex mt-3">
+                        <div class="col-12">
+                            <button class="btn btn-primary w-100"> Guardar vuelo </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+
+        function ocultarEscala3() {
+            document.getElementById("divEscala3").removeAttribute('style');
+            document.getElementById("divEscala3").style.display = "none";
+            document.getElementById("es3").value = "";
+        }
+
+        function escala3() {
+            document.getElementById("divEscala3").removeAttribute('style');
+            document.getElementById("divEscala3").style.display = "flex";
+        }
+
+        function ocultarEscala2() {
+            document.getElementById("divEscala2").removeAttribute('style');
+            document.getElementById("divEscala2").style.display = "none";
+
+        }
+
+        function escala2() {
+            document.getElementById("divEscala2").removeAttribute('style');
+            document.getElementById("divEscala2").style.display = "flex";
+        }
+
+        function escala1() {
+            var check = $("#checkEscala1").is(":checked");
+
+            if (check) {
+                document.getElementById("divEscala1").removeAttribute('style');
+                document.getElementById("divEscala1").style.display = "flex";
+            } else {
+                document.getElementById("divEscala1").removeAttribute('style');
+                document.getElementById("divEscala1").style.display = "none";
+            }
+
+        }
+
+
+    </script>
+}

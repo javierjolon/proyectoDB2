@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Vuelo>
+
+@{ Layout = "_LayoutAdmin"; }
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Viajes Programados</h1>
+    <div class="row d-flex justify-content-between">
+        @foreach (var item in Model)
+        {
+            <div class="card mt-2" style="width: 18rem;">
+                <img src="http://placeimg.com/640/480/nature" class="card-img-top" alt="...">
+                <div class="text-right">
+                    @if (item.IdStatus == "1")
+                    {
+                        <span class="badge table-success">@item.Status</span>
+                    }
+                    else
+                    {
+                        <span class="badge table-danger">@item.Status</span>
+                    }
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Desde: @item.Origen
+                        <br />
+                        <i class="bi bi-arrow-right"></i>
+                        <br />
+                        Hacia: @item.Destino
+                    </h5>
+                    <p class="card-text text-left" style="font-size: 15px;">
+                        Fecha salida: @item.FechaSalida
+                        <br />
+                        Fecha llegada: @item.FechaEntrada
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

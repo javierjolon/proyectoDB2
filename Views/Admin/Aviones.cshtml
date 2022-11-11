@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Avion>
+
+@{ Layout = "_LayoutAdmin"; }
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Aviones</h1>
+
+    @*<form method="post" action="@Url.Action("GuardarAvion", "Admin")">
+        <div class="card">
+            <div class="card-body">
+
+                <h5 class="card-title">Agregar nuevo avión</h5>
+
+                <div class="card-body d-flex ">
+
+                    <div class="input-group flex-nowrap col-6">
+                        <span class="input-group-text" id="addon-wrapping">
+                            <i class="bi bi-airplane"></i>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Tipo de avión" aria-label="tipoAvion" name="tipoAvion" aria-describedby="addon-wrapping" required>
+                    </div>
+
+                    <div class="input-group flex-nowrap col-5">
+                        <span class="input-group-text" id="addon-wrapping">
+                            <i class="bi bi-person"></i>
+                        </span>
+                        <input type="number" class="form-control" placeholder="Capacidad" aria-label="Capacidad" name="capacidad" aria-describedby="addon-wrapping" required>
+                    </div>
+
+                    <div class="col-1">
+                        <button class="btn btn-primary"> Guardar </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>*@
+
+    <div class="mt-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Placa</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Capacidad</th>
+                    @*<th scope="col">Acciones</th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.IdAvion</th>
+                        <td>@item.Placa</td>
+                        <td>@item.Modelo</td>
+                        <td>@item.Tipo</td>
+                        <td>@item.Capacidad</td>
+                        @*<td>
+                            <a href="" class="btn btn-danger">
+                                <i class="bi bi-dash-circle"></i> Deshabilitar
+                            </a>
+                        </td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

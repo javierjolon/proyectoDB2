@@ -5,75 +5,63 @@
 <div class="text-center">
     <h1 class="display-4">Mis vuelos</h1>
 
-    <div class="card text-center">
-        <div class="card-body">
-            <h5 class="card-title">Viaje</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        </div>
-    </div>
-
     <div class="card text-center mt-3">
         <div class="card-body">
             <h5 class="card-title">Reserva de lugares</h5>
 
-            <span class="d-inline-block" data-toggle="tooltip" title="Disponible">
-                <button class="btn btn-success" data-toggle="modal" data-target="#DisponibleModal">A1</button>
-            </span>
-
-            <span class="d-inline-block" data-toggle="tooltip" title="En Reserva">
-                <button class="btn btn-secondary" data-toggle="modal" data-target="#ReservaModal">A2</button>
-            </span>
-
-            <span class="d-inline-block" data-toggle="tooltip" title="Confirmado">
-                <a href="#" class="btn btn-danger disabled">A3</a>
-            </span>
-
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Horario</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Guatemala - Barcelona</td>
+                        <td>05/11/2022 - 17:00</td>
+                        <td class="d-flex flex-row justify-content-center">
+                            <div>
+                                <a class="btn btn-primary" href="@Url.Action("VerVuelo", "Home")">
+                                    <i class="bi bi-eye text-white"></i>
+                                </a>
+                            </div>
+                            @*<div class="ml-1 mr-1">
+                                    <a class="btn btn-secondary">
+                                        <i class="bi bi-pencil-square text-white"></i>
+                                    </a>
+                                </div>*@
+                            @*<div>
+                                <button class="btn btn-danger" data-toggle="modal" data-target="#EliminarVueloModal">
+                                    <i class="bi bi-trash3 text-white"></i>
+                                </button>
+                            </div>*@
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+    </div>
 
-        <!-- Modal Disponible -->
-        <div class="modal fade" id="DisponibleModal" tabindex="-1" aria-labelledby="DisponibleModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Reserva de lugar</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Tiene xx minutos para confirmar.
-                        <br />
-                        Despues de este tiempo, quedará como disponible.
-                        <br />
-                        Para confirmar ir a mis vuelos.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Reservar</button>
-                    </div>
+    <!-- Modal Eliminar vuelo -->
+    <div class="modal fade" id="EliminarVueloModal" tabindex="-1" aria-labelledby="EliminarVueloModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Vuelo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
-        </div>
-
-        <!-- Modal Reserva -->
-        <div class="modal fade" id="ReservaModal" tabindex="-1" aria-labelledby="ReservaModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Lugar reservado</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Lugar se encuentra reservado
-                        <br />
-                        Desea quedarse en lista de espera?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                        <button type="button" class="btn btn-primary">Si</button>
-                    </div>
+                <div class="modal-body">
+                    Esta seguro que quiere eliminar el vuelo?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-danger">Si</button>
                 </div>
             </div>
         </div>
@@ -85,10 +73,9 @@
                 $('[data-toggle="tooltip"]').tooltip()
             })
 
-            $('#myModal').on('shown.bs.modal', function () {
+            $('#EliminarVueloModel').on('shown.bs.modal', function () {
                 $('#myInput').trigger('focus')
             })
         </script>
     }
-
 </div>
