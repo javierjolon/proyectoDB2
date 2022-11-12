@@ -62,7 +62,7 @@ namespace ProyectoDB2.Controllers
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.Add("@ID_Asiento_Vuelo", SqlDbType.Int).Value = idReserva;
+                        cmd.Parameters.Add("@ID_Reserva", SqlDbType.Int).Value = idReserva;
 
                         con.Open();
                         cmd.ExecuteNonQuery();
