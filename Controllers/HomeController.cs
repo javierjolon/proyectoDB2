@@ -51,7 +51,7 @@ namespace ProyectoDB2.Controllers
             }
         }
 
-        public IActionResult ConfirmarReserva(int userId, int idReserva)
+        public IActionResult ConfirmarReserva(int userId, int idAsientoVuelo)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace ProyectoDB2.Controllers
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.Add("@ID_Asiento_Vuelo", SqlDbType.Int).Value = idReserva;
+                        cmd.Parameters.Add("@ID_Asiento_Vuelo", SqlDbType.Int).Value = idAsientoVuelo;
 
                         con.Open();
                         cmd.ExecuteNonQuery();
@@ -75,7 +75,7 @@ namespace ProyectoDB2.Controllers
             catch (Exception e)
             {
                 string mensaje = e.Message;
-                return View("Reservar");
+                return RedirectToAction("MisVuelos", "Home", new { userId = userId });
                 throw;
             }
         }

@@ -13,7 +13,6 @@ namespace ProyectoDB2.Auxiliares
         public void ConexionOpen()
         {
             this.conn.Open();
-
         }  
 
         public SqlDataReader Conexion(string query)
