@@ -71,9 +71,34 @@
             Ingreso por archivo
         </div>
         <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            @using (Html.BeginForm("CargarClientesPorArchivo", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupFile01">Subir</label>
+                    <input type="file" class="form-control" id="inputGroupFile01" name="formArchivo">
+                </div>
+
+                <div class="mt-3 mb-3">
+                    <label for="inputGroupFile01">Que hacer con los usuarios repetidos?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="saltarRepetidos" id="flexRadioDefault1" value="1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Rollback
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="saltarRepetidos" id="flexRadioDefault2" checked value="2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Saltarse los usuarios repeditos
+                        </label>
+                    </div>
+                </div>
+                
+
+                <div>
+                    <button class="btn btn-primary w-100" type="submit">Cargar </button>
+                </div>
+            }
         </div>
     </div>
 </div>

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,12 +17,73 @@ namespace ProyectoDB2.Controllers
 {
     public class AdminController : Controller
     {
+        public ActionResult CargarClientesPorArchivo(IFormFile formArchivo, string saltarRepetidos)
+        {
+            if (formArchivo == null)
+            {
+                //TempData["texto"] = "Seleccione un archivo excel";
+                //TempData["color"] = "error";
+                return RedirectToAction("clientes");
+            }
+            string check = "";
+            if (saltarRepetidos == "1")
+            {
+                check = "1";
+            }
+            else
+            {
+                check = "2";
+            }
+
+            ClienteAuxiliar clienteAuxiliar = new ClienteAuxiliar();
+
+            using (var stream = formArchivo.OpenReadStream())
+            using (StreamReader sr = new StreamReader(stream))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string[] rows = sr.ReadLine().Split(',');
+                    DateTime fecha = DateTime.Parse(rows[1]);
+                    int tipoPersona = int.Parse(rows[6]);
+
+
+                    clienteAuxiliar.InsertarClientePorArchivo(rows[0], rows[2], rows[4], rows[5], fecha, rows[3], tipoPersona);
+                }
+            }
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=AerolineaABC;Integrated Security=True"))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspInsertarCliente", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@opcion", SqlDbType.VarChar).Value = check;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                    con.Close();
+                }
+                return RedirectToAction("clientes");
+            }
+            catch (Exception e)
+            {
+                string mensaje = e.Message;
+                return View("clientes");
+            }
+
+        }
+
+
         public ActionResult GuardarClienteMAnual(string dpi, string email, string nombre, string apellido, string telefono, DateTime fechaNacimiento, int tipoPersona )
         {
             ClienteAuxiliar clienteAuxiliar = new ClienteAuxiliar();
             bool respuesta = clienteAuxiliar.GuardarClienteManual(dpi, email, nombre, apellido, fechaNacimiento, telefono, tipoPersona);
             return Redirect("Clientes");
         }
+        
         public ActionResult Clientes()
         {
             try
@@ -37,6 +99,7 @@ namespace ProyectoDB2.Controllers
                 throw;
             }
         }
+        
         public ActionResult ConfirmarEliminacionDeVuelo(int idVuelo)
         {
             try
