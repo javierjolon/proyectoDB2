@@ -25,7 +25,9 @@ namespace ProyectoDB2.Controllers
         {
             try
             {
-                using (SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=AerolineaABC;Integrated Security=True"))
+                ConexionAuxiliar conexionAuxiliar = new ConexionAuxiliar();
+                //using (SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=AerolineaABC;Integrated Security=True"))
+                using (SqlConnection con = new SqlConnection(conexionAuxiliar.conexionString()))
                 {
                     using (SqlCommand cmd = new SqlCommand("uspCancelarReserva", con))
                     {
@@ -53,7 +55,8 @@ namespace ProyectoDB2.Controllers
         {
             try
             {
-                using (SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=AerolineaABC;Integrated Security=True"))
+                ConexionAuxiliar conexionAuxiliar = new ConexionAuxiliar();
+                using (SqlConnection con = new SqlConnection(conexionAuxiliar.conexionString()))
                 {
                     using (SqlCommand cmd = new SqlCommand("SPConfirmarAsiento", con))
                     {
@@ -95,7 +98,8 @@ namespace ProyectoDB2.Controllers
         {
             try
             {
-                using (SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=AerolineaABC;Integrated Security=True"))
+                ConexionAuxiliar conexionAuxiliar = new ConexionAuxiliar();
+                using (SqlConnection con = new SqlConnection(conexionAuxiliar.conexionString()))
                 {
                     using (SqlCommand cmd = new SqlCommand("SPReservaAsiento", con))
                     {

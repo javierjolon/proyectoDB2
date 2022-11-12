@@ -14,7 +14,7 @@ namespace ProyectoDB2.Auxiliares
         {
             this.conn.Open();
 
-        }
+        }  
 
         public SqlDataReader Conexion(string query)
         {
@@ -29,6 +29,11 @@ namespace ProyectoDB2.Auxiliares
         {
             this.conn.Close();
 
+        }
+
+        public string conexionString()
+        {
+            return "Data Source=.;Initial Catalog=AerolineaABC;Integrated Security=True";
         }
     }
 }
