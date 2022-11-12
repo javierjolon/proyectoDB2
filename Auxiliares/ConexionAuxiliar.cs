@@ -8,8 +8,8 @@ namespace ProyectoDB2.Auxiliares
 {
     public class ConexionAuxiliar
     {
-        SqlConnection conn = new SqlConnection("Data Source=.;Initial Catalog=AerolineaABC;Integrated Security=True");
-
+        //SqlConnection conn = new SqlConnection("Data Source=.;Initial Catalog=AerolineaABC;Integrated Security=True");
+        SqlConnection conn = new SqlConnection("Server=tcp:areolineabc.database.windows.net,1433;Initial Catalog=AerolineaABC;Persist Security Info=False;User ID=AerolineaABC;Password=Prueba123#;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         public void ConexionOpen()
         {
             this.conn.Open();
@@ -32,7 +32,7 @@ namespace ProyectoDB2.Auxiliares
 
         public string conexionString()
         {
-            return "Data Source=.;Initial Catalog=AerolineaABC;Integrated Security=True";
+            return "Server=tcp:areolineabc.database.windows.net,1433;Initial Catalog=AerolineaABC;Persist Security Info=False;User ID=AerolineaABC;Password=Prueba123#;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         }
     }
 }

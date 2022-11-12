@@ -51,7 +51,7 @@ namespace ProyectoDB2.Controllers
             }
         }
 
-        public IActionResult ConfirmarReserva(int userId, int idAsientoVuelo)
+        public IActionResult ConfirmarReserva(int userId, int idReserva)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace ProyectoDB2.Controllers
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.Add("@ID_Asiento_Vuelo", SqlDbType.Int).Value = idAsientoVuelo;
+                        cmd.Parameters.Add("@ID_Asiento_Vuelo", SqlDbType.Int).Value = idReserva;
 
                         con.Open();
                         cmd.ExecuteNonQuery();
