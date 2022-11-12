@@ -16,13 +16,13 @@
                 <h5 class="card-title">Agregar tripulación</h5>
 
                 <div class="card-body d-flex ">
-                    <input  type="text" value="@Model.idVuelo" name="idVuelo" hidden/>
+                    <input  type="text" value="@Model.idVuelo" name="vueloId" hidden/>
 
                     <div class="input-group flex-nowrap col-11">
                         <span class="input-group-text" id="addon-wrapping">
                             <i class="bi bi-award"></i>
                         </span>
-                        <select class="form-select w-100" id="puesto" name="puesto" required>
+                        <select class="form-select w-100" id="puesto" name="personaId" required>
                             <option value="" selected>Puesto...</option>
                             @foreach (var item in Model.ListadoTripulacion)
                             {

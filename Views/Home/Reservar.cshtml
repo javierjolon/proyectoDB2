@@ -34,14 +34,63 @@
                 {
                     case "1": //disponible
                         <span class="d-inline-block" data-toggle="tooltip" title="@item.NombreStatus">
-                            <button class="btn btn-success" data-toggle="modal" data-target="#DisponibleModal">@item.NumeroAsiento</button>
+                            <button class="btn btn-success" data-toggle="modal" data-target="#DisponibleModal-@item.Id">@item.NumeroAsiento</button>
                         </span>
+
+                        <!-- Modal Disponible -->
+                        <div class="modal fade" id="DisponibleModal-@item.Id" tabindex="-1" aria-labelledby="DisponibleModal-@item.Id" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Reserva de lugar</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Tiene 20 segundos para confirmar.
+                                        <br />
+                                        Despues de este tiempo, quedará como disponible.
+                                        <br />
+                                        Para confirmar, ir a mis vuelos.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <a href="@Url.Action("ReservarAsiento", "Home", new { userId = ViewData["userId"].ToString(), idAsientoVuelo = item.Id, idVuelo = Model.Vuelo.Id })" type="button" class="btn btn-primary">Reservar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         break;
 
                     case "2": //reservado
                         <span class="d-inline-block" data-toggle="tooltip" title="@item.NombreStatus">
-                            <button class="btn btn-secondary" data-toggle="modal" data-target="#ReservaModal">@item.NumeroAsiento</button>
+                            <button class="btn btn-secondary" data-toggle="modal" data-target="#ReservaModal-@item.NumeroAsiento">@item.NumeroAsiento</button>
                         </span>
+
+                        <!-- Modal Reserva -->
+                        <div class="modal fade" id="ReservaModal-@item.NumeroAsiento" tabindex="-1" aria-labelledby="ReservaModal-@item.NumeroAsiento" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Lugar reservado</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Lugar se encuentra reservado
+                                        <br />
+                                        Desea quedarse en lista de espera?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                        <a href="@Url.Action("ReservarAsiento", "Home", new { userId = ViewData["userId"].ToString(), idAsientoVuelo = item.Id, idVuelo = Model.Vuelo.Id })" class="btn btn-primary">Si</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         break;
 
                     case "3": //confirmado
@@ -71,53 +120,27 @@
             }
         </div>
 
-        <!-- Modal Disponible -->
-        <div class="modal fade" id="DisponibleModal" tabindex="-1" aria-labelledby="DisponibleModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Reserva de lugar</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Tiene xx minutos para confirmar.
-                        <br />
-                        Despues de este tiempo, quedará como disponible.
-                        <br />
-                        Para confirmar, ir a mis vuelos.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Reservar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @*<div>
+            @{ string test = @ViewData["status"].ToString(); }
 
-        <!-- Modal Reserva -->
-        <div class="modal fade" id="ReservaModal" tabindex="-1" aria-labelledby="ReservaModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Lugar reservado</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Lugar se encuentra reservado
-                        <br />
-                        Desea quedarse en lista de espera?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                        <button type="button" class="btn btn-primary">Si</button>
-                    </div>
+            @if (test == "1")
+            {
+                
+            }
+        </div>*@
+
+        @*<div>
+            @{ string query = (ViewData["query"] ?? string.Empty) as string; }
+            @if (!string.IsNullOrEmpty(query))
+            {
+                <div class="alert alert-danger mt-3" role="alert">
+                    @ViewData["message"].ToString()
                 </div>
-            </div>
-        </div>
+            }
+        </div>*@
+        
+
+        
     </div>
 
     @section Scripts{

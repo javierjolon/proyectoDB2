@@ -9,6 +9,38 @@ namespace ProyectoDB2.Auxiliares
 {
     public class VueloAuxiliar
     {
+        public List<MisAsientos> ObtenerMisVuelos(string userId)
+        {
+            ConexionAuxiliar conexion = new ConexionAuxiliar();
+            string query = "select r.ID_Reserva, r.ID_Asiento_Vuelo, av.NO_Asiento, sa.ID_Status_Reserva, sa.Nombre status, ae1.Nombre aeo, ae2.Nombre aed " +
+                "from Reserva r " +
+                "left join Asiento_Vuelo av on r.ID_Asiento_Vuelo = av.ID_Asiento_Vuelo " +
+                "left join Status_Reserva sa on r.ID_Status_Reserva = sa.ID_Status_Reserva " +
+                "left join Vuelo v on av.ID_Vuelo = v.ID_Vuelo " +
+                "left join Aeropuerto ae1 on v.ID_AeropuertoOrigen = ae1.ID_Aeropuerto " +
+                "left join Aeropuerto ae2 on v.ID_AeropuertoDestino = ae2.ID_Aeropuerto " +
+                "where r.ID_Persona = '"+ userId + "'";
+            SqlDataReader reader = conexion.Conexion(query);
+
+            List<MisAsientos> respuesta = new List<MisAsientos>();
+
+            while (reader.Read())
+            {
+                MisAsientos misAsientos = new MisAsientos();
+                misAsientos.IdReserva = int.Parse(reader["id_reserva"].ToString());
+                misAsientos.IdAsientoVuelo = int.Parse(reader["id_asiento_vuelo"].ToString());
+                misAsientos.NoAsiento = reader["no_asiento"].ToString();
+                misAsientos.IdStatusReserva = int.Parse(reader["id_status_reserva"].ToString());
+                misAsientos.Status = reader["status"].ToString();
+                misAsientos.Origen = reader["aeo"].ToString();
+                misAsientos.Destino = reader["aed"].ToString();
+                respuesta.Add(misAsientos);
+            }
+            conexion.ConexionClose();
+            return respuesta;
+        }
+
+
         public List<Vuelo> ObtenerVuelos()
         {
             ConexionAuxiliar conexion = new ConexionAuxiliar();

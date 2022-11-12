@@ -381,7 +381,6 @@ C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Home\VerV
 C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutAdmin.cshtml.g.cs
 C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutHome.cshtml.g.cs
-C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutUser.cshtml.g.cs
 C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
 C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
@@ -395,3 +394,7 @@ C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\ProyectoDB2.genruntim
 C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Admin\AgregarVuelo.cshtml.g.cs
 C:\Users\DATOS\Desktop\ProyectoDB2\bin\Debug\netcoreapp3.1\System.Data.Odbc.dll
 C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Admin\AgregarTripulacionAVuelo.cshtml.g.cs
+C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Admin\EliminarVuelo.cshtml.g.cs
+C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Login\Index.cshtml.g.cs
+C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutLogin.cshtml.g.cs
+C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Clientes.cshtml.g.cs

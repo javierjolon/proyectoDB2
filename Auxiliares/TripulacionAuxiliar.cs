@@ -9,6 +9,26 @@ namespace ProyectoDB2.Auxiliares
 {
     public class TripulacionAuxiliar
     {
+        public List<Persona> ObtenerTipoDePersona()
+        {
+            ConexionAuxiliar conexion = new ConexionAuxiliar();
+            string query = "select * from Tipo_Persona";
+            SqlDataReader reader = conexion.Conexion(query);
+
+            List<Persona> respuesta = new List<Persona>();
+
+            while (reader.Read())
+            {
+                Persona persona = new Persona();
+                persona.Id = int.Parse(reader["id_tipo_persona"].ToString());
+                persona.Tipo = reader["clasifiacion"].ToString();
+                respuesta.Add(persona);
+            }
+            conexion.ConexionClose();
+
+            return respuesta;
+        }
+
         public void GuardarTripulacionAsignada(int vueloId, int personaId)
         {
 

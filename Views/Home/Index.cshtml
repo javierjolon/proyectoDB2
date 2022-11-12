@@ -37,7 +37,7 @@
                     </p>
                     @if (item.IdStatus == "1")
                     {
-                        <a href="@Url.ActionLink("Reservar", "Home", new { id = item.Id })" class="btn btn-primary">Reservar</a>
+                        <a href="@Url.ActionLink("Reservar", "Home", new { id = item.Id, userId = ViewData["userId"].ToString() })" class="btn btn-primary">Reservar</a>
                     }
                 </div>
             </div>

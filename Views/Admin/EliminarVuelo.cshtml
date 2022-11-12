@@ -1,0 +1,56 @@
+﻿@model EliminarVuelo
+
+
+@{ Layout = "_LayoutAdmin"; }
+
+@{
+    ViewData["Title"] = "Eliminar vuelo";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Eliminar Vuelo</h1>
+
+    <div class="card text-center">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Vuelo.Origen - @Model.Vuelo.Destino</h5>
+            <p class="card-text"> </p>
+            <p class="card-text">Avion: @Model.Vuelo.Avion </p>
+            <p class="card-text">Fecha de Salida: @Model.Vuelo.FechaSalida</p>
+            <p class="card-text">Fecha de Entrada: @Model.Vuelo.FechaEntrada </p>
+            @if (Model.ListadoAsientos.Count > 0)
+            {
+                <div>
+                    <p class="card-text">
+                        Actualmente existen:
+                        <span class="badge badge-danger ml-3 mr-3" style="font-size:25px;"> @Model.ListadoAsientos.Count </span>
+                        asientos confirmados
+                    </p>
+                    <ul>
+                        <li>
+                            <p>Si elimina el vuelo se le notificará a cada persona que tenga el asiento confirmado.</p>
+                        </li>
+                        <li>
+                            <p>Si elimina el vuelo no se podra revertir la acción.</p>
+
+                        </li>
+                    </ul>
+
+                    <a href="@Url.ActionLink("ConfirmarEliminacionDeVuelo", "Admin", new { idVuelo = Model.IdVuelo })" class="btn btn-danger text-white"> Eliminar vuelo </a>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <p class="card-text"> 
+                        Actualmente existen:  
+                        <span class="badge badge-success ml-3 mr-3" style="font-size:25px;"> @Model.ListadoAsientos.Count </span>
+                        asientos confirmados 
+                    </p>
+                    <a href="@Url.ActionLink("ConfirmarEliminacionDeVuelo", "Admin", new { idVuelo = Model.IdVuelo })"  class="btn btn-danger text-white"> Eliminar vuelo </a>
+                </div>
+               
+            }
+
+        </div>
+    </div>
+</div>

@@ -16,13 +16,95 @@ namespace ProyectoDB2.Controllers
 {
     public class AdminController : Controller
     {
-        public ActionResult GuardarTripulacionAsignada(int vueloId, int personaId)
+        public ActionResult GuardarClienteMAnual(string dpi, string email, string nombre, string apellido, string telefono, DateTime fechaNacimiento, int tipoPersona )
         {
-            
+            ClienteAuxiliar clienteAuxiliar = new ClienteAuxiliar();
+            bool respuesta = clienteAuxiliar.GuardarClienteManual(dpi, email, nombre, apellido, fechaNacimiento, telefono, tipoPersona);
+            return Redirect("Clientes");
+        }
+        public ActionResult Clientes()
+        {
+            try
+            {
+                TripulacionAuxiliar tripulacionAuxiliar = new TripulacionAuxiliar();
+                List<Persona> personas = tripulacionAuxiliar.ObtenerTipoDePersona();
+                return View(personas);
+            }
+            catch (Exception e)
+            {
+                string mensaje = e.Message;
+                return View();
+                throw;
+            }
+        }
+        public ActionResult ConfirmarEliminacionDeVuelo(int idVuelo)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=AerolineaABC;Integrated Security=True"))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEliminarVuelo", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-            
+                        cmd.Parameters.Add("@ID_Vuelo", SqlDbType.Int).Value = idVuelo;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                    con.Close();
+                }
+                return RedirectToAction("Vuelos");
+            }
+            catch (Exception e)
+            {
+                string mensaje = e.Message;
+                return View("AgregarTripulacionAVuelo");
+            }
+        }
+
+        public ActionResult EliminarVuelo(int idVuelo)
+        {
+            VueloAuxiliar vueloAuxiliar = new VueloAuxiliar();
+            Vuelo vuelo = vueloAuxiliar.ObtenerVuelo(idVuelo.ToString());
+
+            AsientoAuxiliar asientoAuxiliar = new AsientoAuxiliar();
+            List<Asiento> asientos = asientoAuxiliar.ObtenerAsientosDeVueloReservados(idVuelo.ToString());
+
+            EliminarVuelo respuesta = new EliminarVuelo();
+            respuesta.IdVuelo = idVuelo;
+            respuesta.Vuelo = vuelo;
+            respuesta.ListadoAsientos = asientos;
 
             return View(respuesta);
+        }
+
+        public ActionResult GuardarTripulacionAsignada(int vueloId, int personaId)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=AerolineaABC;Integrated Security=True"))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SPIngresarTripulacion", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@ID_Vuelo", SqlDbType.Int).Value = vueloId;
+                        cmd.Parameters.Add("@ID_Persona", SqlDbType.Int).Value = personaId;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                    con.Close();
+                }
+                return RedirectToAction("AgregarTripulacionAVuelo", new { idVuelo = vueloId });
+            }
+            catch (Exception e)
+            {
+                string mensaje = e.Message;
+                return View("AgregarTripulacionAVuelo");
+            }
+            
         }
 
         public ActionResult AgregarTripulacionAVuelo(int idVuelo)
@@ -96,7 +178,9 @@ namespace ProyectoDB2.Controllers
                         con.Open();
                         cmd.ExecuteNonQuery();
                     }
+                    con.Close();
                 }
+                
 
                 return RedirectToAction("Vuelos");
             }
@@ -235,5 +319,6 @@ namespace ProyectoDB2.Controllers
             }
 
         }
+
     }
 }

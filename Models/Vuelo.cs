@@ -2,6 +2,14 @@
 
 namespace ProyectoDB2.Models
 {
+
+    public class EliminarVuelo
+    {
+        public int IdVuelo { get; set; }
+        public Vuelo Vuelo { get; set; }
+        public List<Asiento> ListadoAsientos { get; set; }
+
+    }
     public class Vuelo
     {
         public int Id { get; set; }

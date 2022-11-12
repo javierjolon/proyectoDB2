@@ -1,0 +1,49 @@
+﻿@{ Layout = "_LayoutLogin"; }
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card">
+        <div class="card-header">
+            Login
+        </div>
+        <div class="card-body">
+            <form method="post" action="@Url.ActionLink("ValidarUsuario", "Login" )">
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping">
+                        <i class="bi bi-person"></i>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Username" name="user" required>
+                </div>
+
+                <div class="input-group flex-nowrap mt-3">
+                    <span class="input-group-text" id="addon-wrapping">
+                        <i class="bi bi-lock"></i>
+                    </span>
+                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                </div>
+
+                <div class="mt-3">
+                    <button class="btn btn-primary w-100" type="submit">Ingresar</button>
+                </div>
+
+                @{ string test = @ViewData["status"].ToString(); }
+
+                @if (test == "1")
+                {
+                    <div class="alert alert-danger mt-3" role="alert">
+                        @ViewData["message"].ToString()
+                    </div>
+                }
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
