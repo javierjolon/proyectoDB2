@@ -398,3 +398,4 @@ C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Eli
 C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Login\Index.cshtml.g.cs
 C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutLogin.cshtml.g.cs
 C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Clientes.cshtml.g.cs
+C:\Users\DATOS\Desktop\ProyectoDB2\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Informes.cshtml.g.cs

@@ -398,3 +398,4 @@ C:\Users\DATOS\Desktop\ProyectoDB2\obj\Release\netcoreapp3.1\Razor\Views\Home\Re
 C:\Users\DATOS\Desktop\ProyectoDB2\obj\Release\netcoreapp3.1\Razor\Views\Home\VerVuelo.cshtml.g.cs
 C:\Users\DATOS\Desktop\ProyectoDB2\obj\Release\netcoreapp3.1\Razor\Views\Login\Index.cshtml.g.cs
 C:\Users\DATOS\Desktop\ProyectoDB2\obj\Release\netcoreapp3.1\Razor\Views\Shared\_LayoutLogin.cshtml.g.cs
+C:\Users\DATOS\Desktop\ProyectoDB2\obj\Release\netcoreapp3.1\Razor\Views\Admin\Informes.cshtml.g.cs

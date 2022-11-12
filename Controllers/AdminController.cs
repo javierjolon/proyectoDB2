@@ -17,6 +17,65 @@ namespace ProyectoDB2.Controllers
 {
     public class AdminController : Controller
     {
+
+        //fmreservaspordia
+        public ActionResult GenerarInforme1(DateTime fecha)
+        {
+            //ConexionAuxiliar conexionAuxiliar = new ConexionAuxiliar();
+            //using (var conn = new SqlConnection(conexionAuxiliar.conexionString()))
+            //{
+            //    if (conn.State != ConnectionState.Open)
+            //        conn.Open();
+
+            //    using (var cmd = new SqlCommand("fmreservaspordia", conn))
+            //    {
+            //        cmd.CommandType = CommandType.StoredProcedure;
+            //        SqlCommandBuilder.DeriveParameters(cmd);
+
+                    
+            //        cmd.Parameters.Add(fecha.Date);
+
+            //        cmd.ExecuteNonQuery();
+            //        var respuesta = cmd.Parameters["@RETURN_VALUE"].Value;
+            //        string test = "";
+            //    }
+            //}
+            return View();
+            //try
+            //{
+            //    ConexionAuxiliar conexion = new ConexionAuxiliar();
+            //    using (SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=AerolineaABC;Integrated Security=True"))
+            //    using (SqlConnection con = new SqlConnection(conexion.conexionString()))
+            //    {
+            //        using (SqlCommand cmd = new SqlCommand("uspInsertarCliente", con))
+            //        {
+            //            cmd.CommandType = CommandType.StoredProcedure;
+
+            //            cmd.Parameters.Add("@opcion", SqlDbType.VarChar).Value = check;
+
+            //            con.Open();
+            //            cmd.ExecuteNonQuery();
+            //        }
+            //        con.Close();
+            //    }
+            //    return RedirectToAction("clientes");
+            //}
+            //catch (Exception e)
+            //{
+            //    string mensaje = e.Message;
+            //    return View("clientes");
+            //}
+        }
+
+        public ActionResult Informe1(DateTime fecha)
+        {
+            return View();
+        }
+        public ActionResult Informes()
+        {
+            return View();
+        }
+
         public ActionResult CargarClientesPorArchivo(IFormFile formArchivo, string saltarRepetidos)
         {
             if (formArchivo == null)
